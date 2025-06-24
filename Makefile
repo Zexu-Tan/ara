@@ -177,5 +177,17 @@ riscv_tests:
 # Helper targets
 .PHONY: clean
 
+
+
+# Generate cycle-accurate test with C-program
+.PHONY: joint-test
+
+
+
+
+
+
+
+
 clean:
 	rm -rf $(INSTALL_DIR)
