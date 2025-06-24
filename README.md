@@ -38,12 +38,13 @@ To build this toolchain, run the following command in the project's root directo
 make toolchain-llvm
 ```
 
-Ara also requires an updated Spike ISA simulator, with support for the vector extension.
+Ara also requires an updated Spike ISA simulator, with support for the vector extension. There are linking issues with the standard libraries when using newer CC/CXX versions to compile Spike. Therefore, here we resort to older versions of the compilers. If there are problems with dynamic linking, use: make riscv-isa-sim LDFLAGS="-static-libstdc++". Spike was compiled successfully using gcc and g++ version 7.2.0.
 
 To build Spike, run the following command in the project's root directory.
 
 ```bash
 # Build Spike
+
 make riscv-isa-sim
 ```
 
@@ -58,6 +59,8 @@ To build it, run the following command in the project's root directory.
 make verilator
 ```
 
+Copy the file named `verilator_bin` in folder `ara/install/verilator/bin` into folder `ara/install/verilator/share/verilator`.
+
 ## Configuration
 
 Ara's parameters are centralized in the `config` folder, which provides several configurations to the vector machine.
@@ -69,7 +72,17 @@ Prepend `config=chosen_ara_configuration` to your Makefile commands, or export t
 
 ### Build Applications
 
-The `apps` folder contains example applications that work on Ara. Run the following command to build an application. E.g., `hello_world`:
+The `apps` folder contains example applications that work on Ara. 
+
+Prepend the following command after line `RISCV_LDFLAGS_SPIKE  ?= $(RISCV_LDFLAGS) $(SPIKE_LDFLAGS) -Wl,--gc-sections` in file 'ara/apps/common/runtime.mk'
+
+```bash
+RISCV_CCFLAGS += -target riscv64-unknown-elf
+RISCV_LDFLAGS += -L${LLVM_INSTALL_DIR}/riscv64-unknown-elf/lib
+RISCV_LDFLAGS += -lgloss
+```
+
+Then run the following command to build an application. E.g., `hello_world`:
 
 ```bash
 cd apps
@@ -177,9 +190,10 @@ You can use `gtkwave` to open such waveforms.
 CVA6 can be replaced by an ideal FIFO that dispatches the vector instructions to Ara with the maximum issue-rate possible.
 In this mode, only Ara and its memory system affect performance.
 This mode has some limitations:
- - The dispatcher is a simple FIFO. Ara and the dispatcher cannot have complex interactions.
- - Therefore, the vector program should be fire-and-forget. There cannot be runtime dependencies from the vector to the scalar code.
- - Not all the vector instructions are supported, e.g., the ones that use the `rs2` register.
+
+- The dispatcher is a simple FIFO. Ara and the dispatcher cannot have complex interactions.
+- Therefore, the vector program should be fire-and-forget. There cannot be runtime dependencies from the vector to the scalar code.
+- Not all the vector instructions are supported, e.g., the ones that use the `rs2` register.
 
 To compile a program and generate its vector trace:
 
@@ -214,6 +228,7 @@ We also provide Synopsys Spyglass linting scripts in the hardware/spyglass. Run 
 ## Publications
 
 If you want to use Ara, you can cite us:
+
 ```
 @Article{Ara2020,
   author = {Matheus Cavalcante and Fabian Schuiki and Florian Zaruba and Michael Schaffner and Luca Benini},
@@ -226,6 +241,7 @@ If you want to use Ara, you can cite us:
   doi    = {10.1109/TVLSI.2019.2950087}
 }
 ```
+
 ```
 @INPROCEEDINGS{9912071,
   author={Perotti, Matteo and Cavalcante, Matheus and Wistoff, Nils and Andri, Renzo and Cavigelli, Lukas and Benini, Luca},
@@ -237,6 +253,7 @@ If you want to use Ara, you can cite us:
   pages={43-51},
   doi={10.1109/ASAP54787.2022.00017}}
 ```
+
 ```
 @ARTICLE{10500752,
   author={Perotti, Matteo and Cavalcante, Matheus and Andri, Renzo and Cavigelli, Lukas and Benini, Luca},
