@@ -1,0 +1,17 @@
+
+=============
+=  IMATMUL  =
+=============
+
+
+
+------------------------------------------------------------
+Calculating a (4 x 4) x (4 x 4) matrix multiplication...
+------------------------------------------------------------
+
+Initializing matrices...
+Calculating imatmul...
+The execution took 0 cycles.
+The performance is %f OP/cycle (%f% utilization).
+Verifying result...
+Passed.

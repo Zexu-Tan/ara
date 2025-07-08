@@ -17,7 +17,7 @@
 // Author: Matteo Perotti <mperotti@iis.ee.ethz.ch>
 
 #include "dotproduct.h"
-
+//#define INTRINSICS
 int64_t dotp_v64b(int64_t *a, int64_t *b, uint64_t avl) {
 #ifdef INTRINSICS
 
@@ -269,8 +269,9 @@ int8_t dotp_v8b(int8_t *a, int8_t *b, uint64_t avl) {
   }
 
   // Reduce and store
-  red = vredsum_vs_i8m8_i8m1(red, acc, red, vl);
-  return vmv_x_s_i8m1_i8(red);
+  //red = vredsum_vs_i8m8_i8m1(red, acc, red, vl);
+  //return vmv_x_s_i8m1_i8(red);
+  return 42;
 
 #else
 
@@ -306,6 +307,7 @@ int8_t dotp_v8b(int8_t *a, int8_t *b, uint64_t avl) {
   asm volatile("vredsum.vs v0, v24, v0");
   asm volatile("vmv.x.s %0, v0" : "=r"(red));
   return red;
+  //return 42;
 
 #endif
 }

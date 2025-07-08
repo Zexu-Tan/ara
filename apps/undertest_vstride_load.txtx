@@ -1,0 +1,23 @@
+cd undertest_vstride_load && if [ -d script ]; then python3 script/gen_data.py  > data.S ; else touch data.S; fi
+sed -i s/"li t0, MSTATUS_FS | MSTATUS_XS$"/"li t0, MSTATUS_FS | MSTATUS_XS | MSTATUS_VS"/ /home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common/crt.S
+git update-index --assume-unchanged /home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common/crt.S
+/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/install/riscv-llvm/bin/clang -march=rv64gcv_zfh_zvfh0p1 -menable-experimental-extensions -mabi=lp64d -mno-relax -fuse-ld=lld -fno-vectorize -mllvm -scalable-vectorization=off -mllvm -riscv-v-vector-bits-min=0 -Xclang -target-feature -Xclang +no-optimized-zero-stride-load -mcmodel=medany -I/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/common -std=gnu99 -O3 -ffast-math -fno-common -fno-builtin-printf  -DNR_LANES=8 -DVLEN=4096  -Wunused-variable -Wall -Wextra -Wno-unused-command-line-argument  -DPREALLOCATE=1 -DSPIKE=1 -I/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/env -I/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common -ffunction-sections -fdata-sections -c undertest_vstride_load/data.S -o undertest_vstride_load/data.S.o.spike
+/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/install/riscv-llvm/bin/clang -march=rv64gcv_zfh_zvfh0p1 -menable-experimental-extensions -mabi=lp64d -mno-relax -fuse-ld=lld -fno-vectorize -mllvm -scalable-vectorization=off -mllvm -riscv-v-vector-bits-min=0 -Xclang -target-feature -Xclang +no-optimized-zero-stride-load -mcmodel=medany -I/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/common -std=gnu99 -O3 -ffast-math -fno-common -fno-builtin-printf  -DNR_LANES=8 -DVLEN=4096  -Wunused-variable -Wall -Wextra -Wno-unused-command-line-argument  -DPREALLOCATE=1 -DSPIKE=1 -I/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/env -I/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common -ffunction-sections -fdata-sections -c /home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common/crt.S -o /home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common/crt.S.o.spike
+mkdir -p bin/
+/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/install/riscv-llvm/bin/clang -Iinclude -march=rv64gcv_zfh_zvfh0p1 -menable-experimental-extensions -mabi=lp64d -mno-relax -fuse-ld=lld -fno-vectorize -mllvm -scalable-vectorization=off -mllvm -riscv-v-vector-bits-min=0 -Xclang -target-feature -Xclang +no-optimized-zero-stride-load -mcmodel=medany -I/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/common -std=gnu99 -O3 -ffast-math -fno-common -fno-builtin-printf  -DNR_LANES=8 -DVLEN=4096  -Wunused-variable -Wall -Wextra -Wno-unused-command-line-argument  -DPREALLOCATE=1 -DSPIKE=1 -I/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/env -I/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common -ffunction-sections -fdata-sections -o bin/undertest_vstride_load.spike undertest_vstride_load/main.c.o.spike undertest_vstride_load/data.S.o.spike /home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common/crt.S.o.spike /home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common/syscalls.c.o.spike common/util.c.o.spike -static -nostartfiles -lm -Wl,--gc-sections -L/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/install/riscv-gcc/lib/gcc/riscv64-unknown-elf/9.2.0 -L/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/install/riscv-llvm/riscv64-unknown-elf/lib -lgloss -nostdlib -T/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common/test.ld -Wl,--gc-sections -DSPIKE
+/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/install/riscv-llvm/bin/llvm-objdump --mattr=v -D bin/undertest_vstride_load.spike > bin/undertest_vstride_load.spike.dump
+mkdir -p spike_runs
+
+Simulating undertest_vstride_load with SPIKE:
+
+/home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/install/riscv-isa-sim/bin/spike --isa=rv64gcv_zfh --varch="vlen:4096,elen:64" bin/undertest_vstride_load.spike | tee spike_runs/spike-run-undertest_vstride_load
+odd-indexed elements:
+  odd[0] = 255
+  odd[1] = 2
+  odd[2] = 4
+  odd[3] = 6
+even-indexed elements:
+  even[0]  = 256
+  even[1]  = 256
+  even[2]  = 256
+  even[3]  = 256

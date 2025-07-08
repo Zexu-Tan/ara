@@ -1,0 +1,19 @@
+cd undertest_vstride_load && if [ -d script ]; then python3 script/gen_data.py  > data.S ; else touch data.S; fi
+sed -i s/"li t0, MSTATUS_FS | MSTATUS_XS$"/"li t0, MSTATUS_FS | MSTATUS_XS | MSTATUS_VS"/ /home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common/crt.S
+git update-index --assume-unchanged /home/zexu/Documents/Synopsys_RVV_DSP/4f7a4a2/ara/apps/riscv-tests/benchmarks/common/crt.S
+
+Stimulation with Spike:
+odd-indexed elements:
+  odd[0] = 256
+  odd[1] = 256
+  odd[2] = 256
+  odd[3] = 256
+even-indexed elements:
+  even[0]  = 255
+  even[1]  = 2
+  even[2]  = 4
+  even[3]  = 6
+  
+  
+  
+

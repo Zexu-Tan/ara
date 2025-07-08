@@ -1,0 +1,11 @@
+hello
+odd-indexed elements:
+  odd[0] = 255
+  odd[1] = 2
+  odd[2] = 4
+  odd[3] = 6
+even-indexed elements:
+  even[0]  = 256
+  even[1]  = 256
+  even[2]  = 256
+  even[3]  = 256

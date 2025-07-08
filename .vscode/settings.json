@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "riscv_vector.h": "c",
+        "imatmul.h": "c",
+        "*.inc": "c",
+        "__locale": "c",
+        "executor": "c",
+        "functional": "c",
+        "chrono": "c",
+        "buffer": "c",
+        "internet": "c",
+        "io_context": "c",
+        "netfwd": "c",
+        "socket": "c",
+        "timer": "c",
+        "*.s": "c",
+        "*.x": "c",
+        "stddef.h": "c",
+        "runtime.h": "c",
+        "compare": "c",
+        "cstdint": "c",
+        "algorithm": "c"
+    }
+}

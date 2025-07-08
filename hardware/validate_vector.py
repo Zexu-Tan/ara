@@ -8,15 +8,13 @@ datadir = "vector_traces"
 
 trace = f"{datadir}/trace_hart_0.log"
 
-dump = f"{datadir}/imatmul.dump"
+dump = f"{datadir}/undertest_vstride_load.dump"
 
  
 
 #inststr = r"\s+([0-9a-f]{8}):"
 
 vinststr = r"([0-9a-f]{8}):\s+[0-9a-f\s]+(v.*)"
-
- 
 
 imem = {}
 
@@ -45,20 +43,26 @@ new_trace = ""
 with open(trace, "r") as f:
 
     for line in f:
+        
+        if "vector arith" in line:
+            adr = int(line.split()[3], 16)
+            vinst = imem[adr]
+            new_trace += line.replace("vector arith", vinst)
+            
+        elif "VLx" in line or "VSx" in line:
+            adr = int(line.split()[3], 16)
+            vinst = imem[adr]
+            new_trace += line.replace(line.split()[6], vinst)
 
-        if "vector arith" not in line:
-
+        else:
             new_trace += line
-
             continue
+            
 
- 
-
-        adr = int(line.split()[3], 16)
-
-        vinst = imem[adr]
-
-        new_trace += line.replace("vector arith", vinst)
+        
+        
+            
+        
 
  
 

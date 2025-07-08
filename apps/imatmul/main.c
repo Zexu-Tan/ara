@@ -18,11 +18,16 @@
 //         Samuel Riedel, ETH Zurich
 
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "kernel/imatmul.h"
-#include "printf.h"
 #include "runtime.h"
+#include "util.h"
+
+#ifndef SPIKE
+#include "printf.h"
+#endif
 
 // Define Matrix dimensions:
 // C = AB with A=[MxN], B=[NxP], C=[MxP]
@@ -140,4 +145,3 @@ int main() {
 
   return 0;
 }
-

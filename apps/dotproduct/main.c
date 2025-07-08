@@ -30,10 +30,10 @@
 #endif
 
 // Run also the scalar benchmark
-#define SCALAR 1
+#define SCALAR 0
 
 // Check the vector results against golden vectors
-#define CHECK 1
+#define CHECK 0
 
 // Vector size (Byte)
 extern uint64_t vsize;

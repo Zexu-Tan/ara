@@ -50,12 +50,10 @@ void imatmul_4x4(int64_t *c, const int64_t *a, const int64_t *b,
   
 // INTRINSICS VERSION new
 #ifdef INTRINSICS
+
   
   for (unsigned long int p = 0; p < P;) {
 
-
-    size_t vl = vsetvl_e64m4(P - p);
-   // printf("size of vl:%d\n", vl);
 
     const int64_t *b_ = b + p;
     int64_t *c_ = c + p;
@@ -68,7 +66,7 @@ void imatmul_4x4(int64_t *c, const int64_t *a, const int64_t *b,
       imatmul_vec_4x4(c__, a_, b_, N, P);
     }
 
-    p += vl;
+    p += 4;
   }
 
 #else
@@ -100,13 +98,8 @@ void imatmul_vec_4x4_slice_init() {
   
   //Intrisnics initialization
 #ifdef INTRINSICS
-  vint64m4_t v0  = vmv_v_x_i64m4(0, 4);
-  vint64m4_t v4  = vmv_v_x_i64m4(0, 4);
-  vint64m4_t v8  = vmv_v_x_i64m4(0, 4);
-  vint64m4_t v12 = vmv_v_x_i64m4(0, 4);
-  
 
-  
+    
 #else
   asm volatile("vmv.v.i v0,  0");
   asm volatile("vmv.v.i v4,  0");
@@ -118,23 +111,23 @@ void imatmul_vec_4x4_slice_init() {
 void imatmul_vec_4x4(int64_t *c, const int64_t *a, const int64_t *b,
                      const unsigned long int N, const unsigned long int P) {
 #ifdef INTRINSICS
+  size_t vl = vsetvl_e64m4(4);
+
+  vint64m4_t v0  = vmv_v_x_i64m4(0, vl);
+  vint64m4_t v4  = vmv_v_x_i64m4(0, vl);
+  vint64m4_t v8  = vmv_v_x_i64m4(0, vl);
+  vint64m4_t v12 = vmv_v_x_i64m4(0, vl);
+  
+  
   int64_t t0, t1, t2, t3;
 
   // Original pointer
   const int64_t *a_ = a;
 
   // Vector registers
-  vint64m1_t v0, v4, v8, v12, v16, v20;
-  size_t vl = vsetvl_e64m1(4); // Set vector length to 4 (for 4x4)
+  vint64m4_t v16, v20;
 
-  // Initialize accumulators
-  v0 = vmv_v_x_i64m1(0, vl);
-  v4 = vmv_v_x_i64m1(0, vl);
-  v8 = vmv_v_x_i64m1(0, vl);
-  v12 = vmv_v_x_i64m1(0, vl);
-
-  // Prefetch one row of matrix B
-  v16 = vle64_v_i64m1(b, vl);
+  v16 = vle64_v_i64m4(b, vl);
   b += P;
 
   // Prefetch one row of scalar values
@@ -152,18 +145,18 @@ void imatmul_vec_4x4(int64_t *c, const int64_t *a, const int64_t *b,
     // Calculate pointer to the matrix A
     a = a_ + ++n;
 
-    v0 = vmacc_vx_i64m1(v0, t0, v16, vl);
+    v0 = vmacc_vx_i64m4(v0, t0, v16, vl);
     t0 = *a, a += N;
 
     // Load one row of B
-    v20 = vle64_v_i64m1(b, vl);
+    v20 = vle64_v_i64m4(b, vl);
     b += P;
 
-    v4 = vmacc_vx_i64m1(v4, t1, v16, vl);
+    v4 = vmacc_vx_i64m4(v4, t1, v16, vl);
     t1 = *a, a += N;
-    v8 = vmacc_vx_i64m1(v8, t2, v16, vl);
+    v8 = vmacc_vx_i64m4(v8, t2, v16, vl);
     t2 = *a, a += N;
-    v12 = vmacc_vx_i64m1(v12, t3, v16, vl);
+    v12 = vmacc_vx_i64m4(v12, t3, v16, vl);
     t3 = *a;
 
     a = a_ + ++n;
@@ -171,33 +164,33 @@ void imatmul_vec_4x4(int64_t *c, const int64_t *a, const int64_t *b,
     if (n == N)
       break;
 
-    v0 = vmacc_vx_i64m1(v0, t0, v20, vl);
+    v0 = vmacc_vx_i64m4(v0, t0, v20, vl);
     t0 = *a, a += N;
 
     // Load one row of B
-    v16 = vle64_v_i64m1(b, vl);
+    v16 = vle64_v_i64m4(b, vl);
     b += P;
 
-    v4 = vmacc_vx_i64m1(v4, t1, v20, vl);
+    v4 = vmacc_vx_i64m4(v4, t1, v20, vl);
     t1 = *a, a += N;
-    v8 = vmacc_vx_i64m1(v8, t2, v20, vl);
+    v8 = vmacc_vx_i64m4(v8, t2, v20, vl);
     t2 = *a, a += N;
-    v12 = vmacc_vx_i64m1(v12, t3, v20, vl);
+    v12 = vmacc_vx_i64m4(v12, t3, v20, vl);
     t3 = *a;
   }
 
   // Last iteration: store results
-  v0 = vmacc_vx_i64m1(v0, t0, v20, vl);
-  vse64_v_i64m1(c, v0, vl);
+  v0 = vmacc_vx_i64m4(v0, t0, v20, vl);
+  vse64_v_i64m4(c, v0, vl);
   c += P;
-  v4 = vmacc_vx_i64m1(v4, t1, v20, vl);
-  vse64_v_i64m1(c, v4, vl);
+  v4 = vmacc_vx_i64m4(v4, t1, v20, vl);
+  vse64_v_i64m4(c, v4, vl);
   c += P;
-  v8 = vmacc_vx_i64m1(v8, t2, v20, vl);
-  vse64_v_i64m1(c, v8, vl);
+  v8 = vmacc_vx_i64m4(v8, t2, v20, vl);
+  vse64_v_i64m4(c, v8, vl);
   c += P;
-  v12 = vmacc_vx_i64m1(v12, t3, v20, vl);
-  vse64_v_i64m1(c, v12, vl);
+  v12 = vmacc_vx_i64m4(v12, t3, v20, vl);
+  vse64_v_i64m4(c, v12, vl);
 
 
 
