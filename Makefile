@@ -94,7 +94,7 @@ toolchain-llvm-newlib: Makefile toolchain-llvm
 	make && \
 	make install
 
-toolchain-llvm-rt: Makefile toolchain-llvm-main toolchain-llvm-newlib
+toolchain-llvm-rt: #Makefile toolchain-llvm-main toolchain-llvm-newlib
 	cd $(ROOT_DIR)/toolchain/riscv-llvm/compiler-rt && rm -rf build && mkdir -p build && cd build && \
 	$(CMAKE) $(ROOT_DIR)/toolchain/riscv-llvm/compiler-rt -G Ninja \
 	-DCMAKE_INSTALL_PREFIX=$(LLVM_INSTALL_DIR) \

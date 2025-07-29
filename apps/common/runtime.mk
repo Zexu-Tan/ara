@@ -93,6 +93,11 @@ RISCV_CCFLAGS_SPIKE  ?= $(RISCV_FLAGS) $(SPIKE_CCFLAGS) -ffunction-sections -fda
 RISCV_CXXFLAGS ?= $(RISCV_FLAGS) -ffunction-sections -fdata-sections
 RISCV_LDFLAGS  ?= -static -nostartfiles -lm -Wl,--gc-sections
 RISCV_LDFLAGS_SPIKE  ?= $(RISCV_LDFLAGS) $(SPIKE_LDFLAGS) -Wl,--gc-sections
+RISCV_CCFLAGS += -target riscv64-unknown-elf
+RISCV_LDFLAGS += -L$(GCC_INSTALL_DIR)/lib/gcc/riscv64-unknown-elf/9.2.0
+RISCV_LDFLAGS += -B${LLVM_INSTALL_DIR}/riscv64-unknown-elf/lib
+RISCV_LDFLAGS += -L${LLVM_INSTALL_DIR}/riscv64-unknown-elf/lib
+RISCV_LDFLAGS += -lgloss
 
 # GCC Flags
 RISCV_FLAGS_GCC    ?= -mcmodel=medany -march=$(RISCV_ARCH) -mabi=$(RISCV_ABI) -I$(CURDIR)/common -static -std=gnu99 -O3 -ffast-math -fno-common -fno-builtin-printf $(DEFINES) $(RISCV_WARNINGS)
