@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "stdint.h": "c",
+        "riscv_vector.h": "c",
+        "arith_lib.h": "c",
+        "printf.h": "c",
+        "string.h": "c",
+        "charconv": "c",
+        "math.h": "c",
+        "dataset.h": "c",
+        "stdio.h": "c",
+        "*.bmark": "c"
+    }
+}

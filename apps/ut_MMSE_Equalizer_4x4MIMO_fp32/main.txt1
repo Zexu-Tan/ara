@@ -36,12 +36,21 @@
 
 int main(void) {
     const int32_t N_subcarriers = N_BEAM;
-    const size_t vl_itr_subcarriers = N_ITR_BEAM;
+    const size_t vl = N_ITR_BEAM;
     
-    vfloat32m1_t H_H_i_real[Nt];
-    vfloat32m1_t H_H_i_imag[Nt];
-    vfloat32m1_t H_j_real[Nt];
-    vfloat32m1_t H_j_imag[Nt];
+    float ref_H_real[NT][NR][N_BEAM];
+    
+    
+    vfloat32m1x4_t temp_H_real_0 = vle16_v_f16m1x4(H[0], vl);
+    
+    vfloat32m1_t t_0_0_real, t_0_0_imag;
+    vcfmul_vv_f32m1_sim(H_H_0_0_real, H_H_0_0_imag, H_0_0_real, H_0_0_imag, &t_0_0_real, &t_0_0_imag, vl);
+  
+    
+    H_H_0_1_real = vle32_v_f32m1(H_real[1][0], vl);
+    H_H_0_1_imag = vle32_v_f32m1(H_imag[1][0], vl);
+    H_H_0_0_imag = vfneg_v_f32m1(H_H_0_0_imag, vl);
+    
     
     
 

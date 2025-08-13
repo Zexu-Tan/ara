@@ -1,0 +1,17 @@
+========Kernel: MMSE_Equalizer_4x4MIMO_FP32========
+Sigma_n2 = %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+========
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+===================LL_Decomp=====================
+
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
