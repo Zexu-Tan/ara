@@ -9,6 +9,15 @@
         "math.h": "c",
         "dataset.h": "c",
         "stdio.h": "c",
-        "*.bmark": "c"
+        "*.bmark": "c",
+        "compare": "c",
+        "cstdint": "c",
+        "format": "c",
+        "runtime.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "span": "c",
+        "utility": "c"
     }
 }

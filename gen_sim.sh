@@ -12,7 +12,9 @@ fi
 # Generate .dump file
 cd "$ROOT_DIR/apps"
 make "bin/$1"
-cd -
+
+cd "$ROOT_DIR/apps/bin/"
+cp "$1.dump" "$ROOT_DIR/gen_replaced_trace/$1.dump"
 
 cd "$ROOT_DIR/hardware"
 app=$1 make simc

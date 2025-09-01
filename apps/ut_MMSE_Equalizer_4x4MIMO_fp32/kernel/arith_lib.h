@@ -20,16 +20,49 @@
   )
 
 #define GET_IDX(i, j, k, nr, vl)  (((i) * (nr) + (j)) * (vl) + (k))
+//i,j  k:subcarriers, nr: receiver size in MIMO, vl
 
 void vcfmul_vv_f32m1_sim(vfloat32m1_t ar, vfloat32m1_t ai,vfloat32m1_t br, vfloat32m1_t bi,vfloat32m1_t *restrict cr,vfloat32m1_t *restrict ci,size_t vl);
 
-void v_compute_gram_f32(size_t nt, size_t nr, size_t vl, float sigma_n2, float H_real[nt][nr][vl], float H_imag[nt][nr][vl], float Gram_real[nt][nr][vl], float Gram_imag[nt][nr][vl]);
-
+//void v_compute_gram_fp32(size_t nt, size_t nr, size_t vl, float sigma_n2, float H_real[nt][nr][vl], float H_imag[nt][nr][vl], float Gram_real[nt][nr][vl], float Gram_imag[nt][nr][vl]);
+void v_compute_gram_fp32(
+  size_t nt, 
+  size_t nr, 
+  size_t vl, 
+  float sigma_n2, 
+  float *H_real,
+  float *H_imag,
+  float *Gram_real, 
+  float *Gram_imag);
+  
 void vfctrans_vv_f32m1_sim(vfloat32m1_t a_real, vfloat32m1_t a_imag, size_t vl);
 
 void vcsqrdmag_vv_f32m1_sim(vfloat32m1_t vr_ar, vfloat32m1_t vr_ai, vfloat32m1_t *vr_cr, size_t vl);
 
-void v_LL_decomp_f32(size_t nt, size_t nr, size_t vl, float Gram_real[nt][nr][vl], float Gram_imag[nt][nr][vl], float L_real[nt][nr][vl], float L_imag[nt][nr][vl]);
+void v_LL_decomp_f32(  
+  size_t nt, 
+  size_t nr, 
+  size_t vl,
+  float *Gram_real,
+  float *Gram_imag,
+  float *L_real,
+  float *L_imag
+
+);
+
+void vcfnmsac_vv_f32m1_sim(  
+    //c = -a*b + p0
+    vfloat32m1_t a_real,
+    vfloat32m1_t a_imag,
+    vfloat32m1_t b_real,
+    vfloat32m1_t b_imag,
+    vfloat32m1_t p0_real,
+    vfloat32m1_t p0_imag,
+    vfloat32m1_t *c_real,
+    vfloat32m1_t *c_imag,
+    size_t vl);
+
+//void v_LL_decomp_f32(size_t nt, size_t nr, size_t vl, float Gram_real[nt][nr][vl], float Gram_imag[nt][nr][vl], float L_real[nt][nr][vl], float L_imag[nt][nr][vl]);
 
 void vcfmac_vv_f32m1_sim(vfloat32m1_t a_real,vfloat32m1_t a_imag,vfloat32m1_t b_real,vfloat32m1_t b_imag,vfloat32m1_t p0_real,vfloat32m1_t p0_imag,vfloat32m1_t *c_real,vfloat32m1_t *c_imag,size_t vl);
 

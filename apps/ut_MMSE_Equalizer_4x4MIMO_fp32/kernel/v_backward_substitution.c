@@ -49,8 +49,8 @@ void v_backward_substitution(
         t_uk_real = vfsub_vv_f32m1(t_uk_real, p0_real, vl);
         t_uk_imag = vfsub_vv_f32m1(t_uk_imag, p0_imag, vl);
 
-        t_uk_real = vfdiv_vv_f32m1(t_uk_real, t_fr_Lii_real, vl);
-        t_uk_imag = vfdiv_vv_f32m1(t_uk_imag, t_fr_Lii_real, vl);
+        t_uk_real = vfmul_vv_f32m1(t_uk_real, t_fr_Lii_real, vl);
+        t_uk_imag = vfmul_vv_f32m1(t_uk_imag, t_fr_Lii_real, vl);
 
         vse32_v_f32m1(&x_real[GET_IDX(ptr_row, 0, 0, 1, vl)], t_uk_real, vl);
         vse32_v_f32m1(&x_imag[GET_IDX(ptr_row, 0, 0, 1, vl)], t_uk_imag, vl);

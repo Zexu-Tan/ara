@@ -43,8 +43,11 @@ void v_forward_substitution(
         t_zk_real = vfsub_vv_f32m1(t_zk_real, p0_real, vl);
         t_zk_imag = vfsub_vv_f32m1(t_zk_imag, p0_imag, vl);
 
-        t_zk_real = vfdiv_vv_f32m1(t_zk_real, t_fr_Lii_real, vl);
-        t_zk_imag = vfdiv_vv_f32m1(t_zk_imag, t_fr_Lii_real, vl);
+        t_zk_real = vfmul_vv_f32m1(t_zk_real, t_fr_Lii_real, vl);
+        t_zk_imag = vfmul_vv_f32m1(t_zk_imag, t_fr_Lii_real, vl); 
+        
+        //t_zk_real = vfmul_vv_f32m1(t_zk_real, t_fr_Lii_real, vl);
+        //t_zk_imag = vfmul_vv_f32m1(t_zk_imag, t_fr_Lii_real, vl);
 
         vse32_v_f32m1(&u_real[GET_IDX(ptr_row, 0, 0, 1, vl)], t_zk_real, vl);
         vse32_v_f32m1(&u_imag[GET_IDX(ptr_row, 0, 0, 1, vl)], t_zk_imag, vl);

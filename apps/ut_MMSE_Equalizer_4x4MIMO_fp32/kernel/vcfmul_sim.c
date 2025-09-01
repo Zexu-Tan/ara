@@ -45,3 +45,23 @@ void vcfmac_vv_f32m1_sim(
     
 }
 
+void vcfnmsac_vv_f32m1_sim(  
+    //c = -a*b + p0
+    vfloat32m1_t a_real,
+    vfloat32m1_t a_imag,
+    vfloat32m1_t b_real,
+    vfloat32m1_t b_imag,
+    vfloat32m1_t p0_real,
+    vfloat32m1_t p0_imag,
+    vfloat32m1_t *c_real,
+    vfloat32m1_t *c_imag,
+    size_t vl){
+    
+    vfloat32m1_t t0_real, t0_imag;
+    vcfmul_vv_f32m1_sim(a_real, a_imag, b_real, b_imag, &t0_real, &t0_imag, vl);
+
+    *c_real = vfsub_vv_f32m1(p0_real, t0_real, vl);
+    *c_imag = vfsub_vv_f32m1(p0_imag, t0_imag, vl);
+    
+}
+
