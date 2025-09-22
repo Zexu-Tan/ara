@@ -1,17 +1,123 @@
+========Statistics========
+vl = 128
+N_BEAM = 128
+NR_LANES = 4
+SNR_db = 20
+The execution took 0 cycles.
+==========================
 ========Kernel: MMSE_Equalizer_4x4MIMO_FP32========
 Sigma_n2 = %f 
+=======real
 %f %f %f %f 
 %f %f %f %f 
 %f %f %f %f 
 %f %f %f %f 
-========
+=======real_ref
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+=======imag
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+=======imag_ref
 %f %f %f %f 
 %f %f %f %f 
 %f %f %f %f 
 %f %f %f %f 
 ===================LL_Decomp=====================
+=======real
 
 %f %f %f %f 
 %f %f %f %f 
 %f %f %f %f 
 %f %f %f %f 
+=======real_ref
+
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+=======compare real_ref
+
+ERROR  TRUE  TRUE  TRUE  
+TRUE  ERROR  TRUE  TRUE  
+TRUE  TRUE  ERROR  TRUE  
+TRUE  TRUE  TRUE  ERROR  
+=======imag
+
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+=======imag_ref
+
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+===================Compute Z=====================
+=======Z_real
+%f 
+%f 
+%f 
+%f 
+=======Z_real_ref
+%f 
+%f 
+%f 
+%f 
+=======Z_imag
+%f 
+%f 
+%f 
+%f 
+=======Z_imag_ref
+%f 
+%f 
+%f 
+%f 
+===================Forward Substitution=====================
+=======u_real
+%f 
+%f 
+%f 
+%f 
+=======U_real_ref
+%f 
+%f 
+%f 
+%f 
+=======u_imag
+%f 
+%f 
+%f 
+%f 
+=======U_imag_ref
+%f 
+%f 
+%f 
+%f 
+===================Backward Substitution=====================
+=======x_real
+%f 
+%f 
+%f 
+%f 
+=======X_real_ref
+%f 
+%f 
+%f 
+%f 
+=======x_imag
+%f 
+%f 
+%f 
+%f 
+=======X_imag_ref
+%f 
+%f 
+%f 
+%f 

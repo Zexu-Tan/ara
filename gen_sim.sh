@@ -9,6 +9,14 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
+
+cd "$ROOT_DIR/apps/bin"
+rm -f "$1"
+rm -f "$1.dump"
+
+
+
+
 # Generate .dump file
 cd "$ROOT_DIR/apps"
 make "bin/$1"
@@ -17,7 +25,7 @@ cd "$ROOT_DIR/apps/bin/"
 cp "$1.dump" "$ROOT_DIR/gen_replaced_trace/$1.dump"
 
 cd "$ROOT_DIR/hardware"
-app=$1 make simc
+app=$1 make sim
 
 
 cd "$ROOT_DIR/hardware/build"

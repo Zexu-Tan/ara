@@ -1,0 +1,31 @@
+The execution took 0 cycles.
+The performance is %f FLOP/cycle (%f% utilization).
+========Statistics========
+vl = 128
+N_BEAM = 128
+NR_LANES = 4
+SNR_db = 20
+The execution took 0 cycles.
+==========================
+========Kernel: MMSE_Equalizer_4x4MIMO_FP32========
+Sigma_n2 = %f 
+=======real
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+=======real_ref
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+=======imag
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+=======imag_ref
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 
+%f %f %f %f 

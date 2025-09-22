@@ -7,7 +7,7 @@
 #include "arith_lib.h"
 
 
-#define CASE 0
+//#define CASE 0
 
 //case 0 vector reg as buffer
 //case 1 multiple reload
@@ -62,31 +62,36 @@ void v_compute_gram_fp32(
     G_22_real = vfadd_vf_f32m1(G_22_real, sigma_n2, vl);
     G_33_real = vfadd_vf_f32m1(G_33_real, sigma_n2, vl);
 
+    vfloat32m1_t t0_real, t0_imag, t0_imag_neg;
+    vfloat32m1_t t1_real, t1_imag, t1_imag_neg;
+    vfloat32m1_t t2_real, t2_imag, t2_imag_neg;
+    vfloat32m1_t t3_real, t3_imag, t3_imag_neg;
+
 
     for (int ptr_row = 0; ptr_row < 4; ptr_row++){
       //G00
-      vfloat32m1_t t0_real = vle32_v_f32m1(&H_real[GET_IDX(ptr_row, 0, 0, nr, vl)], vl);
-      vfloat32m1_t t0_imag = vle32_v_f32m1(&H_imag[GET_IDX(ptr_row, 0, 0, nr, vl)], vl);
-      vfloat32m1_t t0_imag_neg = vfneg_v_f32m1(t0_imag, vl);
+      t0_real = vle32_v_f32m1(&H_real[GET_IDX(ptr_row, 0, 0, nr, vl)], vl);
+      t0_imag = vle32_v_f32m1(&H_imag[GET_IDX(ptr_row, 0, 0, nr, vl)], vl);
+      t0_imag_neg = vfneg_v_f32m1(t0_imag, vl);
       vcfmac_vv_f32m1_sim(t0_real, t0_imag_neg, t0_real, t0_imag, G_00_real, G_00_imag, &G_00_real, &G_00_imag, vl);
 
       //G10
-      vfloat32m1_t t1_real = vle32_v_f32m1(&H_real[GET_IDX(ptr_row, 1, 0, nr, vl)], vl);
-      vfloat32m1_t t1_imag = vle32_v_f32m1(&H_imag[GET_IDX(ptr_row, 1, 0, nr, vl)], vl);
-      vfloat32m1_t t1_imag_neg = vfneg_v_f32m1(t1_imag, vl);
+      t1_real = vle32_v_f32m1(&H_real[GET_IDX(ptr_row, 1, 0, nr, vl)], vl);
+      t1_imag = vle32_v_f32m1(&H_imag[GET_IDX(ptr_row, 1, 0, nr, vl)], vl);
+      t1_imag_neg = vfneg_v_f32m1(t1_imag, vl);
       vcfmac_vv_f32m1_sim(t1_real, t1_imag_neg, t0_real, t0_imag, G_10_real, G_10_imag, &G_10_real, &G_10_imag, vl);
 
 
       //G20
-      vfloat32m1_t t2_real = vle32_v_f32m1(&H_real[GET_IDX(ptr_row, 2, 0, nr, vl)], vl);
-      vfloat32m1_t t2_imag = vle32_v_f32m1(&H_imag[GET_IDX(ptr_row, 2, 0, nr, vl)], vl);
-      vfloat32m1_t t2_imag_neg = vfneg_v_f32m1(t2_imag, vl);
+      t2_real = vle32_v_f32m1(&H_real[GET_IDX(ptr_row, 2, 0, nr, vl)], vl);
+      t2_imag = vle32_v_f32m1(&H_imag[GET_IDX(ptr_row, 2, 0, nr, vl)], vl);
+      t2_imag_neg = vfneg_v_f32m1(t2_imag, vl);
       vcfmac_vv_f32m1_sim(t2_real, t2_imag_neg, t0_real, t0_imag, G_20_real, G_20_imag, &G_20_real, &G_20_imag, vl);
 
       //G30
-      vfloat32m1_t t3_real = vle32_v_f32m1(&H_real[GET_IDX(ptr_row, 3, 0, nr, vl)], vl);
-      vfloat32m1_t t3_imag = vle32_v_f32m1(&H_imag[GET_IDX(ptr_row, 3, 0, nr, vl)], vl);
-      vfloat32m1_t t3_imag_neg = vfneg_v_f32m1(t3_imag, vl);
+      t3_real = vle32_v_f32m1(&H_real[GET_IDX(ptr_row, 3, 0, nr, vl)], vl);
+      t3_imag = vle32_v_f32m1(&H_imag[GET_IDX(ptr_row, 3, 0, nr, vl)], vl);
+      t3_imag_neg = vfneg_v_f32m1(t3_imag, vl);
       vcfmac_vv_f32m1_sim(t3_real, t3_imag_neg, t0_real, t0_imag, G_30_real, G_30_imag, &G_30_real, &G_30_imag, vl);
 
       //G11
@@ -134,6 +139,8 @@ void v_compute_gram_fp32(
     vse32_v_f32m1(&Gram_imag[GET_IDX(3,3,0,nr,vl)], G_33_imag, vl);
 
 }
+
+
 
 #else
 

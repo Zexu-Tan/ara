@@ -1,0 +1,32 @@
+========Kernel: MMSE_Equalizer_4x4MIMO_CFXP16========
+Sigma_n2_fxp = 10 
+vl = 256 
+DLEN = 256b 
+VLEN = 4096b 
+The execution took 0 cycles.
+The performance is %f FLOP/cycle (%f% utilization).
+===================v_compute_gram()=====================
+Gram_real
+  1135      0      0      0    
+  940      1368      0      0    
+  802      883      1135      0    
+  946      1281      810      1677    
+
+Gram_ref_real
+  1135      940      802      946    
+  940      1368      883      1281    
+  802      883      1135      810    
+  946      1281      810      1677    
+
+Gram_imag
+  0      0      0      0    
+  -180      0      0      0    
+  302      58      0      0    
+  -602      -492      -391      0    
+
+Gram_ref_imag
+  0      179      -303      601    
+  -180      0      -59      491    
+  302      58      0      390    
+  -602      -492      -391      0    
+

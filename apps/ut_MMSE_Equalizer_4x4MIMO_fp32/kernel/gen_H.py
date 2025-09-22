@@ -49,10 +49,10 @@ def emit_c_definition(H, header, var_name="H"):
 
 def main():
     p = argparse.ArgumentParser(description="Generate C file defining float H[NT][NR][N_BEAM].")
-    p.add_argument("--NT", type=int, default=4, help="First dimension (default 4)")
-    p.add_argument("--NR", type=int, default=4, help="Second dimension (default 4)")
-    p.add_argument("--N_BEAM", type=int, default=64, help="Third dimension (default 128)")
-    p.add_argument("--SNR",type=int, default = 15, help = "Signal to Noise Ratio (default 15dB)")
+    p.add_argument("--NT", type=int, default= 4, help="First dimension (default 4)")
+    p.add_argument("--NR", type=int, default= 4, help="Second dimension (default 4)")
+    p.add_argument("--N_BEAM", type=int, default= 128, help="Third dimension (default 128)")
+    p.add_argument("--SNR",type=int, default = 20, help = "Signal to Noise Ratio (default 15dB)")
     p.add_argument("--seed", type=int, default=None, help="RNG seed for reproducibility")
     p.add_argument("--out", type=str, default="dataset.c", help="Output C file (stdout if omitted)")
     p.add_argument("--header", type=str, default="dataset.h", help="Header to include (default dataset.h)")

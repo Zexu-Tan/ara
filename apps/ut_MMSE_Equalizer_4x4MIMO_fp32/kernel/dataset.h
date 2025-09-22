@@ -1,12 +1,13 @@
 #ifndef DATASET_H
 #define DATASET_H
 
+
 // NO trailing semicolons on these!
 #define NT          4
 #define NR          4
-#define N_BEAM      64
-#define N_ITR_BEAM  64
-#define SNR         15
+#define N_BEAM      128
+#define N_ITR_BEAM  128
+#define SNR         20
 
 // declaration only — no storage allocated here
 
@@ -31,9 +32,6 @@ extern float U_ref_imag[NT][1][N_BEAM];
 
 extern float X_ref_real[NT][1][N_BEAM];
 extern float X_ref_imag[NT][1][N_BEAM];
-
-
-
 
 
 #endif  // DATASET_H

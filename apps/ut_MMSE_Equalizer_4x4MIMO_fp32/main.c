@@ -1,18 +1,3 @@
-// Copyright 2020 ETH Zurich and University of Bologna.
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 // Author: Zexu.Tan <zexu.tan@tu-dresden.de>
 
 #include <stdint.h>
@@ -32,10 +17,9 @@
 #include "kernel/arith_lib.h"
 #include "kernel/dataset.h"
 
-//#define EPS 1e-3f
+//#define EPS 1e-1f //0.1
 
-
-#define DEBUG 1
+//#define DEBUG 1
 
 int main(void) {
     size_t vl = vsetvl_e32m1(N_ITR_BEAM);
@@ -49,33 +33,36 @@ int main(void) {
     float u_imag[NT][1][N_BEAM] = {0};
     float x_real[NT][1][N_BEAM] = {0};
     float x_imag[NT][1][N_BEAM] = {0};
-
-
     float sigma_n2 = 1.0f / powf(10.0f, SNR/10.0f);
 
     start_timer();
     v_compute_gram_fp32(NT, NR, vl, sigma_n2, (float*)H_real, (float*)H_imag, (float*)Gram_real, (float*)Gram_imag);
+    stop_timer();
+
+    //start_timer();
+    //v_LL_decomp_f32(NT, NR, vl, (float*)Gram_real, (float*)Gram_imag, (float*)L_real, (float*)L_imag);
     //stop_timer();
 
-    v_LL_decomp_f32(NT, NR, vl, (float*)Gram_real, (float*)Gram_imag, (float*)L_real, (float*)L_imag);
-    v_compute_z(NT, NR, vl, (float*)H_real, (float*)H_imag, (float*)Y_ref_real, (float*)Y_ref_imag, (float*)z_real, (float*)z_imag);
-    v_forward_substitution(NT, NR, vl, (float*)z_real, (float*)z_imag, (float*)L_real, (float*) L_imag, (float*) u_real, (float*) u_imag);
-    v_backward_substitution(NT, NR, vl, (float*)u_real, (float*)u_imag, (float*)L_real, (float*)L_imag, (float*)x_real, (float*)x_imag);
-    stop_timer();
+    //start_timer();
+    //v_compute_z(NT, NR, vl, (float*)H_real, (float*)H_imag, (float*)Y_ref_real, (float*)Y_ref_imag, (float*)z_real, (float*)z_imag);
+    //stop_timer();
+    
+    //start_timer();
+    //v_forward_substitution(NT, NR, vl, (float*)z_real, (float*)z_imag, (float*)L_real, (float*) L_imag, (float*) u_real, (float*) u_imag);
+    //stop_timer();
+    
+    //start_timer();
+    //v_backward_substitution(NT, NR, vl, (float*)u_real, (float*)u_imag, (float*)L_real, (float*)L_imag, (float*)x_real, (float*)x_imag);
+    //stop_timer();
 
     int64_t runtime = get_timer();
 
-    //float performance = 8.0 * NT * (NT + 1) / 2 * NT * vl / runtime;
-    //float utilization = 100 * performance / (2.0 * NR_LANES);
+    float performance = 8.0 * NT * (NT + 1) / 2 * NT * vl / runtime;
+    float utilization = 100 * performance / (4.0 * NR_LANES);
 
-    /** 
-    printf("vl = %d\n", vl);
+     
     printf("The execution took %d cycles.\n", runtime);
     printf("The performance is %f FLOP/cycle (%f%% utilization).\n", performance, utilization);
-    */
-
-    
-    
     printf("========Statistics========\n");
     printf("vl = %d\n", vl);
     printf("N_BEAM = %d\n", N_BEAM);
@@ -89,7 +76,7 @@ int main(void) {
 
 #ifdef DEBUG
 
-    int k_debug = 1;
+    int k_debug = 0;
     
     printf("========Kernel: MMSE_Equalizer_4x4MIMO_FP32========\n");
 
@@ -153,6 +140,22 @@ int main(void) {
         printf("\n");
     }
 
+/*
+    printf("=======compare real_ref\n");
+    printf("\n");
+    for (int i = 0; i < NR; i++){
+        for (int j = 0; j < NT; j++){
+            if (fabs(L_ref_real[i][j][k_debug] -  L_real[i][j][k_debug]) > 0.1) {
+                printf("ERROR  ");
+            }
+            else {
+                printf("TRUE  ");
+            }
+            //printf("%f ", L_ref_real[i][j][k_debug]);
+        }
+        printf("\n");
+    }
+*/
     printf("=======imag\n");
     printf("\n");
     for (int i = 0; i < NR; i++){
@@ -170,6 +173,7 @@ int main(void) {
         }
         printf("\n");
     }
+
 
     printf("===================Compute Z=====================\n");
     
