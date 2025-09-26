@@ -19,7 +19,7 @@
 
 //#define EPS 1e-1f //0.1
 
-//#define DEBUG 1
+#define DEBUG 1
 
 int main(void) {
     size_t vl = vsetvl_e32m1(N_ITR_BEAM);
@@ -40,7 +40,7 @@ int main(void) {
     stop_timer();
 
     //start_timer();
-    //v_LL_decomp_f32(NT, NR, vl, (float*)Gram_real, (float*)Gram_imag, (float*)L_real, (float*)L_imag);
+    v_LL_decomp_f32(NT, NR, vl, (float*)Gram_real, (float*)Gram_imag, (float*)L_real, (float*)L_imag);
     //stop_timer();
 
     //start_timer();
@@ -140,22 +140,8 @@ int main(void) {
         printf("\n");
     }
 
-/*
-    printf("=======compare real_ref\n");
-    printf("\n");
-    for (int i = 0; i < NR; i++){
-        for (int j = 0; j < NT; j++){
-            if (fabs(L_ref_real[i][j][k_debug] -  L_real[i][j][k_debug]) > 0.1) {
-                printf("ERROR  ");
-            }
-            else {
-                printf("TRUE  ");
-            }
-            //printf("%f ", L_ref_real[i][j][k_debug]);
-        }
-        printf("\n");
-    }
-*/
+
+
     printf("=======imag\n");
     printf("\n");
     for (int i = 0; i < NR; i++){
@@ -169,12 +155,12 @@ int main(void) {
     printf("\n");
     for (int i = 0; i < NR; i++){
         for (int j = 0; j < NT; j++){
-            printf("%f ", L_imag[i][j][k_debug]);
+            printf("%f ", L_ref_imag[i][j][k_debug]);
         }
         printf("\n");
     }
 
-
+/*
     printf("===================Compute Z=====================\n");
     
     
@@ -297,7 +283,7 @@ int main(void) {
 
     
     
-
+*/
     
     
 #endif    

@@ -21,6 +21,7 @@
         "utility": "c",
         "stddef.h": "c",
         "lib.h": "c",
-        "vector": "c"
+        "vector": "c",
+        "random": "c"
     }
 }

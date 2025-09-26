@@ -59,7 +59,7 @@ endif
 # QuestaSim command
 questa_cmd     ?= questa-$(questa_version)
 # QuestaSim arguments
-questa_args    ?=
+questa_args    ?= -debugDB
 # Path to the binaries
 app_path       ?= $(abspath $(ROOT_DIR)/../apps/bin)
 # Path to ideal dispatcher vtraces

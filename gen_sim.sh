@@ -15,6 +15,14 @@ rm -f "$1"
 rm -f "$1.dump"
 
 
+cd "$ROOT_DIR/apps/$1"
+find . -name "*.o" -type f -delete
+find . -name "*.o.spike" -type f -delete
+
+cd "$ROOT_DIR/apps/$1/kernel"
+find . -name "*.o" -type f -delete
+find . -name "*.o.spike" -type f -delete
+
 
 
 # Generate .dump file
@@ -37,8 +45,6 @@ cp "trace_hart_0.log" "$ROOT_DIR/hardware/vector_traces/"
 cd "$ROOT_DIR/apps/bin"
 
 cp "$1.dump" "$ROOT_DIR/hardware/vector_traces/"
-
-echo "helloworld"
 
 
 

@@ -179,9 +179,9 @@ def main():
                 t_Aij -= p0
 
                 if i == j:
-                    t_Lii = np.sqrt(t_Aij)
+                    t_Lii = 1.0/np.sqrt(t_Aij)
 
-                L_ref[i][j][k] = t_Aij / t_Lii
+                L_ref[i][j][k] = t_Aij * t_Lii
             #print()
 
     L_ref_real = L_ref.real.astype(np.float32)

@@ -72,3 +72,27 @@ def to_int(x, wl, mode="saturate"):
     assert wl in (16, 32)
     if wl == 16:
         return to_int16(x, mode)
+
+
+def fxp_to_fp(x_int, n):
+    """
+    Convert Qm.n fixed-point integers to float.
+
+    Parameters:
+    - x_int: scalar or array of integers (e.g., np.int16, np.int32)
+    - n: number of fractional bits in Qm.n
+
+    Returns:
+    - Floating-point number(s)
+    """
+    return np.asarray(x_int, dtype=np.float64) / (1 << n)
+
+def gen_16QAM_symbol_vec(Nt):
+    const = np.array([-3, -1, 1, 3]) / np.sqrt(10)
+
+    real_part = np.random.choice(const, size=(Nt, 1))
+    imag_part = np.random.choice(const, size=(Nt, 1))
+
+    X = real_part + 1j * imag_part  # Shape: (n_samples, Nt)
+
+    return X

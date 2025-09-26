@@ -36,11 +36,11 @@ int main(void) {
     float x_imag[NT][1][N_BEAM] = {0};
     float sigma_n2 = 1.0f / powf(10.0f, SNR/10.0f);
 
-    start_timer();
+    //start_timer();
     v_compute_gram_fp32(NT, NR, vl, sigma_n2, (float*)H_real, (float*)H_imag, (float*)Gram_real, (float*)Gram_imag);
-    stop_timer();
+    //stop_timer();
 
-    int64_t runtime_compute_gram_fp32 = get_timer();
+    //int64_t runtime_compute_gram_fp32 = get_timer();
 
     //start_timer();
     v_LL_decomp_fp32(NT, NR, vl, (float*)Gram_real, (float*)Gram_imag, (float*)L_real, (float*)L_imag);
@@ -61,22 +61,21 @@ int main(void) {
     //stop_timer();
 
 
-    float performance = (8.0 * NT * (NT + 1) / 2 - 4.0 * NT)* NT * vl / runtime_compute_gram_fp32;
+    //float performance = (8.0 * NT * (NT + 1) / 2 - 4.0 * NT)* NT * vl / runtime_compute_gram_fp32;
 
-    float utilization = 100.0 * performance / (4.0 * NR_LANES);
+    //float utilization = 100.0 * performance / (4.0 * NR_LANES);
 
-    printf("========Statistics========\n");
-    printf("==Kernel Config\n");
-    printf("vl = %d\n", vl);
-    printf("N_SUBCARRIER= %d\n", N_BEAM);
-    printf("==HW Config\n");
-    printf("DLEN = %d\n", NR_LANES * 64);
-    printf("VLEN = %d\n", VLEN);
-    printf("\n");
-    printf("The execution of gram matrix computation took %d cycles.\n", runtime_compute_gram_fp32);
+    /*
+    printf("The execution took %d cycles.\n", runtime);
     printf("The performance is %f DP-FLOP/cycle (%f%% utilization).\n", performance/2.0, utilization);
+    printf("========Statistics========\n");
+    printf("vl = %d\n", vl);
+    printf("N_BEAM = %d\n", N_BEAM);
+    printf("NR_LANES = %d\n", NR_LANES);
+    printf("SNR_db = %d\n", SNR);
+    printf("The execution took %d cycles.\n", runtime);
     printf("==========================\n");
-    
+    */ 
     
 
 

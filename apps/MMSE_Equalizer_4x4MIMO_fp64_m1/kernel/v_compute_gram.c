@@ -7,7 +7,7 @@
 #include "arith_lib.h"
 
 
-#define CASE 3
+#define CASE 0
 
 //case 0 V1* consecutive register access
 //case 1 V1* in order

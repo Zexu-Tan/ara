@@ -5,9 +5,9 @@
 
 #define NT 4
 #define NR 4
-#define SNR 20
-#define N_SUBCARRIER 2048
-#define N_SUBCARRIER_ITR 2048
+#define SNR 10
+#define N_SUBCARRIER 128
+#define N_SUBCARRIER_ITR 128
 
 extern int16_t sigma_n2_fxp;
 
@@ -30,7 +30,10 @@ extern int16_t U_ref_real [NT][1][N_SUBCARRIER];
 extern int16_t U_ref_imag [NT][1][N_SUBCARRIER];
 
 extern int16_t X_ref_real [NT][1][N_SUBCARRIER];
-extern int16_t U_ref_imag [NT][1][N_SUBCARRIER];
+extern int16_t X_ref_imag [NT][1][N_SUBCARRIER];
+
+extern int16_t X_est_ref_real [NT][1][N_SUBCARRIER];
+extern int16_t X_est_ref_imag [NT][1][N_SUBCARRIER];
 
 
 #endif

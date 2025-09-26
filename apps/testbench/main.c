@@ -31,10 +31,10 @@ int main(void) {
   double output_1[vl];
 
   for (int i = 0; i < 256; i++){
-    i_0[i] = 0.0001;
-    i_1[i] = 0.0001;
-    i_2[i] = 0.0001;
-    i_3[i] = 0.0001;
+    i_0[i] = 0.1;
+    i_1[i] = 1;
+    i_2[i] = 0.1;
+    i_3[i] = 0.1;
   }
 
   start_timer();
@@ -43,14 +43,8 @@ int main(void) {
   double b = 1.1;
 
   v0 = vle64_v_f64m1(&i_0[0], vl);
-  v0 = vfmacc_vv_f64m1(v0, v0, v0, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v0, vl);
-  
   v1 = vle64_v_f64m1(&i_1[0], vl);
-
-  //v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
+  v2 = vfmv_v_f_f64m1(0.1, vl);
 
   v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
   v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
@@ -62,30 +56,12 @@ int main(void) {
   v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
   v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
 
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
+  v2 = vfmacc_vf_f64m1(v2, 0.2, v0, vl);
+  v2 = vfmacc_vf_f64m1(v2, 0.2, v0, vl);
+  v2 = vfmacc_vf_f64m1(v2, 0.2, v0, vl);
+  v2 = vfmacc_vf_f64m1(v2, 0.2, v0, vl);
 
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
 
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
-  v2 = vfmacc_vv_f64m1(v2, v0, v1, vl);
 
 
 
@@ -103,7 +79,7 @@ int main(void) {
 
   int64_t runtime = get_timer();
 
-  float performance = (2.0 * 32 * vl) / runtime;
+  float performance = (2.0 * 8 * vl) / runtime;
   float utilization = (100.0 * performance) / (2.0 * NR_LANES);
 
   printf("vl = %d \n", vl);
